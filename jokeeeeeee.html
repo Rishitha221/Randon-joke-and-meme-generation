@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Random Joke and Meme Generator</title>
+    <style>
+        body {
+            background-image: url(https://as1.ftcdn.net/v2/jpg/02/86/18/20/1000_F_286182066_yY72dajL2Vv9pYZ0LWiDiYZrMEStz0Fo.jpg);
+            background-repeat: no-repeat;
+            background-size: cover;
+            background-attachment: fixed;
+            font-style: italic;
+            text-align: center;
+            background-color: rgb(0, 234, 255);
+            margin: 20px;
+            padding: 10px;
+        }
+        h1 {
+            color: black;
+            margin-top: 50px;
+        }
+        #joke-container, #meme-container {
+            margin-top: 20px;
+            color: black;
+            padding: 20px;
+            background-color: antiquewhite;
+            width: 50%;
+            margin: 20px auto;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            border-radius: 10px;
+            border: 1px solid black;
+        }
+        img {
+            max-width: 100%;
+            height: auto;
+            border-radius: 10px;
+        }
+        button {
+            padding: 10px 20px;
+            font-size: 16px;
+            margin: 10px;
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+    <h1>Random Joke and Meme Generator</h1>
+    <button id="get-joke-btn">Get Joke</button>
+    <button id="get-meme-btn">Get Meme</button>
+    <div id="joke-container"></div>
+    <div id="meme-container"></div>
+    <script>
+        document.getElementById('get-joke-btn').addEventListener('click', async () => {
+            const jokeContainer = document.getElementById('joke-container');
+
+            try {
+                const jokeResponse = await fetch('https://official-joke-api.appspot.com/random_joke');
+                const jokeData = await jokeResponse.json();
+                jokeContainer.innerHTML = `<p><strong>${jokeData.setup}</strong><br>${jokeData.punchline}</p>`;
+            } catch (error) {
+                jokeContainer.innerHTML = `<p>Sorry, we couldn't fetch a joke at this time. Please try again later.</p>`;
+            }
+        });
+
+        document.getElementById('get-meme-btn').addEventListener('click', async () => {
+            const memeContainer = document.getElementById('meme-container');
+
+            try {
+                const memeResponse = await fetch('https://meme-api.com/gimme');
+                const memeData = await memeResponse.json();
+                memeContainer.innerHTML = `<img src="${memeData.url}" alt="Random Meme">`;
+            } catch (error) {
+                memeContainer.innerHTML = `<p>Sorry, we couldn't fetch a meme at this time. Please try again later.</p>`;
+            }
+        });
+    </script>
+</body>
+</html>
